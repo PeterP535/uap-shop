@@ -107,9 +107,9 @@ urlpatterns = [
 2. Buat proyek baru dengan menekan tombol Create New Project dan masukkan nama project untuk membuat projectnya
 3. Akan muncul dua informasi baru, yaitu mengenai Project Credentials dan Project Command. Simpan credentials yang kamu peroleh di tempat yang aman, karena seterusnya credentials ini tidak akan bisa kamu lihat lagi. Jangan jalankan dulu instruksi Project Command.
 4. Pada settings.py di proyek Django yang sudah kamu buat tadi, tambahkan URL deployment PWS pada ALLOWED_HOSTS.
-...python
+```python
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "<URL deployment PWS kamu>"]
-...
+```
 5. Jalankan perintah yang terdapat pada informasi Project Command pada halaman PWS. Ketika kamu melakukan push ke PWS, akan ada window yang meminta username dan password. Gunakan credentials yang kamu terima dari PWS, bukan credentials SSO.
 
 6. Setelah menjalankan perintah sebelumnya, jalankan perintah ini untuk kembali mengubah nama branch utama kamu menjadi main.
@@ -122,3 +122,12 @@ git branch -M main
 
 ![DJango Framework](https://github.com/PeterP535/uap-shop/blob/main/images/bagan1.png)
 Pertama, pengguna atau klien akan meminta akses atau resource. Django kemudian akan memproses URL dari klien dan mencocokkannya dengan pola yang ada di file urls.py (pemetaan URL). Selanjutnya, Django akan merujuk ke file views.py untuk mengakses tampilan yang sesuai. File models.py akan mengelola data yang diperlukan berdasarkan permintaan pengguna, sedangkan folder template menyimpan file-file dengan ekstensi html. File-file tersebut berisi kode HTML yang mengatur elemen seperti teks, tabel, ukuran, dan lainnya. Setelah semuanya diproses, hasil tampilan akan dikirim kembali ke pengguna atau klien. Source: https://intellipaat.com/blog/tutorial/python-django-tutorial/
+
+## Fungsi dari git dalam pengembangan perangkat lunak
+Git adalah sistem kontrol versi yang penting dalam pengembangan perangkat lunak, memungkinkan pengembang melacak perubahan kode, bekerja secara kolaboratif, dan mengelola versi proyek secara efisien. Dengan fitur branching dan merging, tim dapat mengembangkan fitur atau memperbaiki bug tanpa mengganggu kode utama. Setiap perubahan dicatat melalui commit, memudahkan tinjauan dan pemulihan versi jika terjadi kesalahan. Git juga memungkinkan kolaborasi tim secara terdistribusi, memberikan setiap anggota salinan penuh dari proyek, serta mendukung kerja offline yang bisa disinkronkan dengan repositori pusat saat online. Fungsionalitas ini menjadikan Git alat penting untuk pengembangan perangkat lunak yang terstruktur dan kolaboratif.
+
+## Framework Django dijadikan permulaan pembelajaran pengembangan perangkat lunak
+Django sering dijadikan pilihan awal dalam pembelajaran pengembangan perangkat lunak karena beberapa alasan kuat. Pertama, Django adalah framework berbasis Python, bahasa pemrograman yang terkenal dengan sintaks yang mudah dipahami dan digunakan oleh pemula. Django juga menyediakan struktur "batteries-included," yang berarti sudah dilengkapi dengan banyak fitur bawaan seperti autentikasi, ORM (Object-Relational Mapping), dan admin panel, sehingga pengembang pemula tidak perlu membangun dari nol. Selain itu, Django mendorong praktik terbaik seperti DRY (Don't Repeat Yourself) dan pembagian kode yang jelas melalui konsep Model-View-Template (MVT), yang membantu pemula memahami arsitektur perangkat lunak yang terorganisir.
+
+## Mengapa model pada Django disebut sebagai ORM?
+Pada Django, model disebut sebagai ORM (Object-Relational Mapping) karena perannya dalam memetakan objek Python ke tabel pada database relasional. Dengan menggunakan ORM, pengembang dapat mengelola database menggunakan kode objek alih-alih menulis kueri SQL secara langsung. Setiap kelas model di Django merepresentasikan tabel dalam database, dan setiap atributnya adalah kolom dari tabel tersebut. ORM di Django memungkinkan pengembang melakukan operasi database seperti Create, Read, Update, dan Delete (CRUD) dengan lebih mudah, efisien, dan aman, sekaligus mencegah kesalahan umum seperti injeksi SQL.
