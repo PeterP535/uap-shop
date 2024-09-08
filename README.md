@@ -120,6 +120,5 @@ git branch -M main
 
 ## *Request client* ke web aplikasi berbasis Django beserta responnya
 
-
-
+![DJango Framework](https://github.com/PeterP535/uap-shop/blob/main/images/bagan1.png)
 Pertama, pengguna atau klien akan meminta akses atau resource. Django kemudian akan memproses URL dari klien dan mencocokkannya dengan pola yang ada di file urls.py (pemetaan URL). Selanjutnya, Django akan merujuk ke file views.py untuk mengakses tampilan yang sesuai. File models.py akan mengelola data yang diperlukan berdasarkan permintaan pengguna, sedangkan folder template menyimpan file-file dengan ekstensi html. File-file tersebut berisi kode HTML yang mengatur elemen seperti teks, tabel, ukuran, dan lainnya. Setelah semuanya diproses, hasil tampilan akan dikirim kembali ke pengguna atau klien. Source: https://intellipaat.com/blog/tutorial/python-django-tutorial/
