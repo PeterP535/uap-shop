@@ -1,8 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+
 <h1>UAP SHOP</h1>
 
 <h5>NPM: </h5>
+
 <p>{{ npm }}<p>
+
 <h5>Name: </h5>
-<p>{{ name }}<p>
+
+<p>{{ nama }}<p>
+
 <h5>Class: </h5>
+
 <p>{{ class }}<p>
+    
+{% if not product_entries %}
+<p>Belum ada data produk.</p>
+{% else %}
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Amount</th>
+    <th>Price</th>
+    <th>Description</th>
+  </tr>
+
+  {% comment %} Berikut cara memperlihatkan data mood di bawah baris ini 
+  {% endcomment %} 
+  {% for product_entry in product_entries %}
+  <tr>
+    <td>{{product_entry.name}}</td>
+    <td>{{product_entry.amount}}</td>
+    <td>{{product_entry.price}}</td>
+    <td>{{product_entry.description}}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %}
+
+<br />
+
+<a href="{% url 'main:create_product' %}">
+  <button>Add New Product</button>
+</a>
+
+
+{% endblock content %}
