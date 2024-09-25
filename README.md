@@ -302,3 +302,56 @@ Contoh serangan CSRF sederhana:
 ![DJango Framework](https://github.com/PeterP535/uap-shop/blob/main/images/postman2.png)
 ![DJango Framework](https://github.com/PeterP535/uap-shop/blob/main/images/postman3.png)
 ![DJango Framework](https://github.com/PeterP535/uap-shop/blob/main/images/postman4.png)
+
+
+# Tugas 4
+
+## 1. Apa perbedaan antara `HttpResponseRedirect()` dan `redirect()`?
+
+- **HttpResponseRedirect():** 
+  - Ini adalah kelas bawaan Django yang mengembalikan status HTTP 302 dan mengarahkan pengguna ke URL lain. Saat menggunakan `HttpResponseRedirect()`, URL harus secara eksplisit ditentukan. Ini adalah pendekatan yang lebih low-level.
+  
+- **redirect():**
+  - Ini adalah fungsi shortcut Django yang menghasilkan `HttpResponseRedirect` dan juga memungkinkan penggunaan model, nama view, atau URL sebagai argumen. Django akan secara otomatis menyelesaikan URL, membuatnya lebih sederhana daripada `HttpResponseRedirect()`.
+
+## 2. Jelaskan cara kerja penghubungan model Product dengan User!
+
+Penghubungan antara model `Product` dengan `User` biasanya dilakukan dengan menggunakan **ForeignKey**. Berikut adalah contoh cara menghubungkan kedua model tersebut di Django:
+
+```python
+from django.contrib.auth.models import User
+from django.db import models
+
+class Product(models.Model):
+    name = models.CharField(max_length=255)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+
+```
+
+## 1. Apa perbedaan antara authentication dan authorization, serta apa yang dilakukan saat pengguna login?
+
+- **Authentication** adalah proses untuk memverifikasi identitas pengguna. Ini biasanya dilakukan dengan meminta pengguna memasukkan kredensial seperti username dan password, yang kemudian divalidasi oleh sistem.
+- **Authorization** adalah proses yang terjadi setelah authentication, yaitu menentukan apa saja yang diizinkan untuk dilakukan oleh pengguna yang telah terautentikasi. Ini menentukan hak akses dan izin di dalam aplikasi.
+
+### Proses saat pengguna login:
+Saat pengguna login, Django pertama-tama memeriksa kredensial mereka melalui fungsi `authenticate()`. Jika berhasil, Django melanjutkan dengan memanggil fungsi `login()` yang menyimpan informasi pengguna di sesi. Setelah login, Django memastikan bahwa pengguna tersebut dapat mengakses resource sesuai dengan izin yang telah ditentukan (authorization).
+
+### Implementasi di Django:
+Django mengimplementasikan **authentication** melalui middleware dan views bawaan seperti `LoginView`. Untuk **authorization**, Django menggunakan sistem berbasis peran dan izin (permissions) yang dapat diatur per user atau grup, memastikan pengguna hanya dapat mengakses fitur yang mereka diizinkan untuk gunakan.
+
+## 2. Bagaimana Django mengingat pengguna yang telah login?
+
+Django mengingat pengguna yang telah login dengan menggunakan **sessions** dan **cookies**. Setelah pengguna berhasil login, Django menyimpan session ID di server dan memberikan cookie yang berisi session key kepada browser pengguna. Pada setiap permintaan berikutnya, browser mengirimkan kembali cookie ini, dan Django menggunakannya untuk memverifikasi sesi pengguna.
+
+### Kegunaan lain dari cookies:
+Selain untuk mengelola sesi pengguna, cookies juga bisa digunakan untuk:
+- Menyimpan preferensi pengguna, seperti pengaturan bahasa atau tema.
+- Melacak aktivitas pengguna di website, misalnya item yang ditambahkan ke keranjang belanja.
+- Menyimpan token untuk login otomatis atau sesi yang diperpanjang (remember me).
+
+### Apakah semua cookies aman digunakan?
+Tidak semua cookies aman. Ada beberapa langkah yang harus diambil untuk meningkatkan keamanan cookies:
+- **HttpOnly:** Cookie dengan atribut ini tidak dapat diakses melalui JavaScript, sehingga lebih aman dari serangan XSS (Cross-Site Scripting).
+- **Secure:** Cookie hanya akan dikirim melalui koneksi HTTPS yang terenkripsi, melindungi data dari penyadapan saat transmisi.
+
+Cookies yang tidak diatur dengan benar bisa menjadi titik lemah dalam keamanan aplikasi, terutama jika berisi data sensitif seperti token sesi.

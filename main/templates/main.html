@@ -3,47 +3,56 @@
 
 <h1>UAP SHOP</h1>
 
-<h5>NPM: </h5>
+<!-- User login status and last login details -->
+{% if username %}
+    <p>Logged in as: {{ username }}</p>
+    <p>Last login: {{ last_login }}</p>
+    <a href="{% url 'main:logout' %}">Logout</a>
+{% else %}
+    <a href="{% url 'main:login' %}">Login</a>
+{% endif %}
 
-<p>{{ npm }}<p>
+<!-- NPM, Name, and Class information -->
+<h5>NPM: </h5>
+<p>{{ npm }}</p>
 
 <h5>Name: </h5>
-
-<p>{{ nama }}<p>
+<p>{{ nama }}</p>
 
 <h5>Class: </h5>
+<p>{{ class }}</p>
 
-<p>{{ class }}<p>
-    
+<!-- Product Table -->
 {% if not product_entries %}
-<p>Belum ada data produk.</p>
+    <p>Belum ada data produk.</p>
 {% else %}
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Amount</th>
-    <th>Price</th>
-    <th>Description</th>
-  </tr>
-
-  {% comment %} Berikut cara memperlihatkan data mood di bawah baris ini 
-  {% endcomment %} 
-  {% for product_entry in product_entries %}
-  <tr>
-    <td>{{product_entry.name}}</td>
-    <td>{{product_entry.amount}}</td>
-    <td>{{product_entry.price}}</td>
-    <td>{{product_entry.description}}</td>
-  </tr>
-  {% endfor %}
-</table>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Amount</th>
+            <th>Price</th>
+            <th>Description</th>
+        </tr>
+        {% for product_entry in product_entries %}
+        <tr>
+            <td>{{product_entry.name}}</td>
+            <td>{{product_entry.amount}}</td>
+            <td>{{product_entry.price}}</td>
+            <td>{{product_entry.description}}</td>
+        </tr>
+        {% endfor %}
+    </table>
 {% endif %}
 
 <br />
 
-<a href="{% url 'main:create_product' %}">
-  <button>Add New Product</button>
-</a>
-
+<!-- Button to Add New Product -->
+{% if username %}  <!-- Only show this if the user is logged in -->
+    <a href="{% url 'main:create_product' %}">
+        <button>Add New Product</button>
+    </a>
+{% else %}
+    <p>Please log in to add new products.</p>
+{% endif %}
 
 {% endblock content %}
