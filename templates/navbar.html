@@ -1,0 +1,40 @@
+<nav class="bg-blue-500 p-4">
+    <div class="container mx-auto flex justify-between items-center">
+        <!-- Navbar title -->
+        <div class="text-white text-2xl font-bold">
+            Game Shop
+        </div>
+
+        <!-- Mobile hamburger icon -->
+        <div class="block lg:hidden">
+            <button onclick="toggleMenu()" class="text-white focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </div>
+
+        <!-- Desktop menu -->
+        <div class="hidden lg:flex space-x-6 items-center text-white">
+            <span>Welcome, <strong>{{ user.username }}</strong></span>
+            <a href="{% url 'main:logout' %}" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+                Logout
+            </a>
+        </div>
+    </div>
+
+    <!-- Mobile menu (hidden by default) -->
+    <div id="mobile-menu" class="lg:hidden hidden mt-4 bg-blue-500 text-white space-y-2 p-4">
+        <span>Welcome, <strong>{{ user.username }}</strong></span>
+        <a href="{% url 'main:logout' %}" class="block bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+            Logout
+        </a>
+    </div>
+</nav>
+
+<script>
+    function toggleMenu() {
+        const menu = document.getElementById('mobile-menu');
+        menu.classList.toggle('hidden');
+    }
+</script>

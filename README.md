@@ -5,7 +5,7 @@ Kelas: PBP B
 [Tugas 2](#tugas-2)
 [Tugas 3](#tugas-3)
 [Tugas 4](#tugas-4)
-
+[Tugas 5](#tugas-5)
 # Tugas 2
 ## Membuat sebuah proyek Django baru
 1. Membuat direktori baru untuk proyek Django baru.
@@ -356,3 +356,71 @@ Tidak semua cookies aman. Ada beberapa langkah yang harus diambil untuk meningka
 - **Secure:** Cookie hanya akan dikirim melalui koneksi HTTPS yang terenkripsi, melindungi data dari penyadapan saat transmisi.
 
 Cookies yang tidak diatur dengan benar bisa menjadi titik lemah dalam keamanan aplikasi, terutama jika berisi data sensitif seperti token sesi.
+
+# Tugas 5
+# CSS Selector Priority, Responsive Design, Box Model, Flexbox & Grid Layout
+
+## 1. Urutan Prioritas CSS Selector
+
+CSS selector memiliki urutan prioritas sebagai berikut:
+
+1. **Inline styles** (dalam atribut `style` langsung di elemen HTML) memiliki prioritas tertinggi.
+    ```html
+   <p style="color: red;">This is inline style</p>
+    ```
+2. **ID selectors** menggunakan tanda #. ID harus unik untuk setiap elemen.
+    ```css
+    #myID {
+        color: blue;
+    }
+    ```
+3. **Class selectors, pseudo-class selectors, dan attribute selectors** menggunakan tanda . untuk class dan [] untuk attribute selectors.
+    ```css
+    .myClass {
+        color: green;
+    }
+
+    a:hover {
+        color: yellow;
+    }
+
+    [type="text"] {
+        color: orange;
+    }
+    ```
+4. **Element (Type) selectors** mengatur gaya berdasarkan tipe elemen.
+    ```css
+    p {
+        color: purple;
+    }
+    ```
+5. **Universal selector (*)** digunakan untuk memilih semua elemen.
+    ```css
+    * {
+        color: black;
+    }
+    ```
+## 2. Pentingnya Responsive Design
+
+Responsive design adalah konsep dimana tampilan aplikasi web dapat menyesuaikan dengan berbagai ukuran layar perangkat, seperti desktop, tablet, dan ponsel. Hal ini penting untuk memastikan user experience yang baik di semua perangkat dan untuk menghindari tampilan yang terpotong atau tidak sesuai pada perangkat dengan ukuran layar yang berbeda.
+
+Contoh Aplikasi:
+    Sudah Menerapkan Responsive Design:
+        1.YouTube: Menyesuaikan layout dengan ukuran layar sehingga pengguna bisa nyaman menonton video baik di desktop maupun mobile.
+    Belum Menerapkan Responsive Design:
+        2.Aplikasi Toko Kecil yang Lama (versi non-responsive): Website yang tidak merespons ukuran layar dengan baik, menyebabkan elemen seperti gambar, teks, atau tombol keluar dari layar pada perangkat mobile.
+
+## 3. Perbedaan Margin, Border, dan Padding
+    1. Margin: Jarak di luar elemen, antara elemen dengan elemen lain.
+    2. Border: Batas atau garis yang mengelilingi elemen.
+    3. Padding: Ruang di dalam elemen, antara konten dan border elemen.
+## 4. Konsep Flexbox dan Grid Layout
+    Flexbox: Flexbox digunakan untuk membuat layout yang fleksibel dan responsif. Elemen dalam flex container dapat diatur secara otomatis untuk mengisi ruang yang tersedia.
+    Kegunaan Flexbox:
+        -Mengatur elemen dalam satu dimensi (horizontal atau vertikal).
+        -Menyusun elemen dengan jarak fleksibel tanpa banyak perhitungan manual.
+        Grid Layout:
+    Grid layout digunakan untuk mengatur elemen dalam dua dimensi (baris dan kolom), ideal untuk layout kompleks seperti halaman web dengan header, sidebar, dan main content.
+        Kegunaan Grid Layout:
+        -Mempermudah membuat layout dua dimensi yang kompleks.
+        -Fleksibel dalam mengatur jumlah dan ukuran baris serta kolom.

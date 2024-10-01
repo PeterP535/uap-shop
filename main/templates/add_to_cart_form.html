@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mx-auto p-8">
+    <h1 class="text-3xl font-bold mb-6">Add {{ game.name }} to Cart</h1>
+
+    <p><strong>Game Name:</strong> {{ game.name }}</p>
+    <p><strong>Description:</strong> {{ game.description }}</p>
+
+    <form method="POST" class="bg-white p-6 rounded shadow-md">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded">Add to Cart</button>
+    </form>
+
+    <a href="{% url 'main:show_main' %}" class="text-blue-500 mt-4 inline-block">Back to Shop</a>
+</div>
+
+{% endblock %}
