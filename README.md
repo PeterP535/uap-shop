@@ -6,6 +6,7 @@ Kelas: PBP B
 [Tugas 3](#tugas-3)
 [Tugas 4](#tugas-4)
 [Tugas 5](#tugas-5)
+[Tugas 6](#tugas-6)
 # Tugas 2
 ## Membuat sebuah proyek Django baru
 1. Membuat direktori baru untuk proyek Django baru.
@@ -404,7 +405,7 @@ CSS selector memiliki urutan prioritas sebagai berikut:
 
 Responsive design adalah konsep dimana tampilan aplikasi web dapat menyesuaikan dengan berbagai ukuran layar perangkat, seperti desktop, tablet, dan ponsel. Hal ini penting untuk memastikan user experience yang baik di semua perangkat dan untuk menghindari tampilan yang terpotong atau tidak sesuai pada perangkat dengan ukuran layar yang berbeda.
 
-Contoh Aplikasi:
+### Contoh Aplikasi:
     Sudah Menerapkan Responsive Design:
         1.YouTube: Menyesuaikan layout dengan ukuran layar sehingga pengguna bisa nyaman menonton video baik di desktop maupun mobile.
     Belum Menerapkan Responsive Design:
@@ -424,3 +425,49 @@ Contoh Aplikasi:
         Kegunaan Grid Layout:
         -Mempermudah membuat layout dua dimensi yang kompleks.
         -Fleksibel dalam mengatur jumlah dan ukuran baris serta kolom.
+
+
+# Tugas 6
+# Manfaat Penggunaan JavaScript dalam Pengembangan Aplikasi Web:
+JavaScript adalah bahasa pemrograman yang digunakan untuk membuat aplikasi web yang dinamis dan interaktif. Beberapa manfaat penggunaan JavaScript dalam pengembangan aplikasi web antara lain:
+
+1. Interaktivitas: JavaScript memungkinkan elemen-elemen di halaman web menjadi interaktif, seperti tombol, form, dan animasi, tanpa perlu memuat ulang halaman.
+2. Pengolahan Data di Browser: JavaScript dapat memproses data di sisi klien (browser), sehingga mengurangi beban pada server.
+3. Penggunaan Asynchronous: Dengan menggunakan AJAX (Asynchronous JavaScript and XML), JavaScript memungkinkan pengambilan data secara asinkron tanpa harus memuat ulang seluruh halaman.
+4. Manajemen DOM: JavaScript memungkinkan manipulasi langsung elemen-elemen DOM (Document Object Model) untuk mengubah konten halaman secara dinamis.
+5. Penyempurnaan User Experience (UX): JavaScript dapat meningkatkan UX dengan menyediakan pengalaman yang lebih cepat, lebih responsif, dan lebih menarik.
+
+# Fungsi dari Penggunaan await pada fetch() dan Konsekuensinya Jika Tidak Menggunakan await:
+1. Fungsi await: Ketika kita menggunakan await pada fetch(), kita memberi tahu JavaScript untuk menunggu hingga operasi fetch() selesai dan mengembalikan hasilnya sebelum melanjutkan eksekusi kode berikutnya. fetch() adalah operasi asinkron, sehingga secara default akan dijalankan di latar belakang, memungkinkan kode lainnya tetap berjalan. Dengan await, kita memastikan bahwa respons dari fetch() sudah ada sebelum kita memprosesnya lebih lanjut.
+
+2. Apa yang Terjadi Jika Tidak Menggunakan await: Jika kita tidak menggunakan await, fungsi fetch() akan mengembalikan sebuah Promise, dan kode di bawahnya akan tetap dieksekusi sebelum Promise tersebut diselesaikan. Akibatnya, kita mungkin mencoba mengakses atau memproses data yang belum diterima sepenuhnya, sehingga menyebabkan kesalahan (misalnya, akses ke undefined data).
+
+contoh tanpa await
+```javascript
+let data = fetch('https://api.example.com/data');
+console.log(data); // Akan menampilkan Promise, bukan data yang sudah selesai diambil
+
+```
+contoh dengan await
+```javascript
+let response = await fetch('https://api.example.com/data');
+let data = await response.json();
+console.log(data); // Menampilkan data yang sudah diproses setelah request selesai
+```
+# Mengapa Perlu Menggunakan Decorator csrf_exempt pada View yang Digunakan untuk AJAX POST?
+csrf_exempt adalah dekorator yang digunakan dalam Django untuk mengecualikan pengecekan CSRF (Cross-Site Request Forgery) pada suatu view. CSRF adalah serangan yang memanfaatkan kepercayaan pengguna terhadap situs web tertentu.
+
+1. Pada aplikasi Django, setiap POST request yang diajukan harus disertai dengan CSRF token untuk memastikan bahwa request tersebut berasal dari sumber yang sah.
+2. Jika kita menggunakan AJAX POST tanpa mengirimkan token CSRF, Django akan menolak request tersebut sebagai tindakan pengamanan.
+3. Namun, ada situasi di mana kita perlu menghindari pengecekan CSRF, misalnya pada API publik yang tidak memerlukan autentikasi pengguna. Dalam kasus seperti ini, kita bisa menggunakan dekorator csrf_exempt untuk mematikan pengecekan CSRF pada view yang ditentukan.
+
+
+# Mengapa Pembersihan Data Input Pengguna Dilakukan di Backend, Bukan Hanya di Frontend?
+Meskipun validasi input bisa dilakukan di frontend untuk meningkatkan pengalaman pengguna (UX) dengan memberikan umpan balik langsung, validasi di backend tetap diperlukan untuk keamanan dan integritas data. Berikut alasannya:
+
+1. Keamanan: Validasi frontend bisa dengan mudah diabaikan atau dimanipulasi oleh pengguna menggunakan alat seperti DevTools di browser. Pengguna yang tidak bertanggung jawab dapat mengirimkan request yang tidak sesuai dengan aturan validasi frontend, misalnya, dengan menghapus validasi di sisi klien.
+2. Kontrol Penuh atas Data: Backend memberikan kontrol penuh terhadap data yang diterima. Semua data yang masuk ke server harus diperiksa untuk mencegah serangan seperti SQL Injection, XSS (Cross-Site Scripting), atau Data Tampering.
+3. Keseragaman: Jika aplikasi memiliki berbagai antarmuka (seperti aplikasi web, mobile, atau API), validasi di backend memastikan bahwa standar pembersihan dan validasi yang konsisten diterapkan pada semua antarmuka. Ini mencegah ketergantungan sepenuhnya pada frontend yang berbeda-beda.
+4. Data Integrity: Validasi di backend memastikan bahwa hanya data yang valid, bersih, dan sesuai dengan aturan bisnis yang akan diproses dan disimpan dalam basis data. Ini penting untuk menjaga kualitas dan keamanan data.
+
+Oleh karena itu, validasi di frontend dan backend keduanya penting: frontend untuk UX dan backend untuk keamanan dan keandalan aplikasi.

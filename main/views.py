@@ -18,6 +18,8 @@ from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 import datetime
 from django.contrib.auth.forms import UserCreationForm
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 
 @login_required(login_url='/login')
@@ -220,3 +222,21 @@ def show_xml_by_id(request, id):
 def show_json_by_id(request, id):
     data = Item.objects.filter(pk=id)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+
+@login_required
+@csrf_exempt
+def add_game_ajax(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST)
+        if form.is_valid():
+            product = form.save()
+            return JsonResponse({'status': 'success', 'game_name': product.name})
+        else:
+            return JsonResponse({'status': 'error', 'errors': form.errors})
+    return JsonResponse({'status': 'invalid_method'})
+
+@login_required
+def show_add_game_modal(request):
+    form = ProductForm()
+    return render(request, 'add_game_modal.html', {'form': form})

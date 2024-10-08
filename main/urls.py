@@ -1,5 +1,5 @@
 from django.urls import path
-from main.views import show_main, create_product, edit_product, delete_product, add_to_cart_form, edit_cart_item, show_xml, show_json, show_xml_by_id, show_json_by_id, login_user, logout_user, delete_cart_item, register
+from main.views import show_main, create_product, edit_product, delete_product, add_to_cart_form, edit_cart_item, show_xml, show_json, show_xml_by_id, show_json_by_id, login_user, logout_user, delete_cart_item, register, add_game_ajax
 
 
 app_name = 'main'
@@ -19,4 +19,5 @@ urlpatterns = [
     path('logout/', logout_user, name='logout'),
     path('delete-cart-item/<int:item_id>/', delete_cart_item, name='delete_cart_item'),  
     path('register/', register, name='register'),
+    path('add-game-ajax/', add_game_ajax, name='add_game_ajax'),
 ]

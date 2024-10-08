@@ -8,7 +8,6 @@
     {% if username %}
         <p class="text-center">Logged in as: {{ username }}</p>
         <p class="text-center">Last login: {{ last_login }}</p>
-        <a href="{% url 'main:logout' %}" class="block text-center text-blue-500 mt-4">Logout</a>
     {% else %}
         <a href="{% url 'main:login' %}" class="block text-center text-blue-500 mt-4">Login</a>
     {% endif %}
@@ -49,7 +48,10 @@
         </div>
     {% endif %}
 
-    <a href="{% url 'main:create_product' %}" class="block text-center text-green-500 mt-6">Add New Game</a>
+    <!-- Button to open Add Game Modal -->
+    <div class="text-center mt-6">
+        <button id="addGameButton" class="bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600">Add New Game by AJAX</button>
+    </div>
 
     <hr class="my-6"/>
 
@@ -70,8 +72,8 @@
                     <td class="px-6 py-4">{{ cart_item.item.name }}</td>
                     <td class="px-6 py-4">{{ cart_item.quantity }}</td>
                     <td class="px-6 py-4">
-                        <a href="{% url 'main:edit_cart_item' cart_item.id %}" class="text-blue-500">Edit Quantity</a> |
-                        <a href="{% url 'main:delete_cart_item' cart_item.id %}" class="text-red-500" onclick="return confirm('Are you sure you want to remove this item from the cart?');">Remove</a>
+                        <a href="{% url 'main:edit_cart_item' cart_item.id %}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Edit Quantity</a> |
+                        <a href="{% url 'main:delete_cart_item' cart_item.id %}" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-blue-600" onclick="return confirm('Are you sure you want to remove this item from the cart?');">Remove</a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -81,5 +83,102 @@
         <p>Your cart is empty.</p>
     {% endif %}
 </div>
+
+<!-- Add Game Modal -->
+<div id="crudModal" tabindex="-1" aria-hidden="true" class="hidden fixed inset-0 z-50 w-full h-full flex items-center justify-center bg-gray-900 bg-opacity-50 transition-opacity duration-300 ease-out">
+  <div id="crudModalContent" class="bg-white rounded-lg shadow-lg w-full max-w-md mx-4 transform opacity-0 scale-95 transition-transform transition-opacity duration-300 ease-out">
+    <!-- Modal header -->
+    <div class="flex justify-between items-center p-4 border-b">
+      <h3 class="text-xl font-semibold">Add New Game</h3>
+      <button id="closeModalBtn" class="text-gray-400 hover:bg-gray-200 rounded-lg p-1.5">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414 1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Modal body -->
+    <div class="p-6 space-y-4">
+      <form id="addGameForm">
+        <div>
+          <label for="name" class="block text-sm font-medium text-gray-700">Game Name</label>
+          <input type="text" id="name" name="name" class="w-full mt-1 p-2 border border-gray-300 rounded-md" placeholder="Enter game name" required>
+        </div>
+        <div>
+          <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+          <textarea id="description" name="description" rows="4" class="w-full mt-1 p-2 border border-gray-300 rounded-md" placeholder="Enter game description" required></textarea>
+        </div>
+        <div>
+          <label for="amount" class="block text-sm font-medium text-gray-700">Amount</label>
+          <input type="number" id="amount" name="amount" class="w-full mt-1 p-2 border border-gray-300 rounded-md" placeholder="Enter amount" required>
+        </div>
+        <div>
+          <label for="price" class="block text-sm font-medium text-gray-700">Price</label>
+          <input type="number" id="price" name="price" class="w-full mt-1 p-2 border border-gray-300 rounded-md" required>
+        </div>
+      </form>
+    </div>
+
+    <!-- Modal footer -->
+    <div class="flex justify-end p-4 border-t">
+      <button id="cancelButton" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg mr-2">Cancel</button>
+      <button type="submit" id="submitGameEntry" form="addGameForm" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- JavaScript to handle the AJAX functionality and modal transitions -->
+<script>
+  // Open the Add Game Modal
+  document.getElementById('addGameButton').addEventListener('click', function() {
+    const modal = document.getElementById('crudModal');
+    modal.classList.remove('hidden'); // Show modal
+    setTimeout(() => {
+      modal.querySelector('#crudModalContent').classList.remove('opacity-0', 'scale-95'); // Enable transitions
+      modal.querySelector('#crudModalContent').classList.add('opacity-100', 'scale-100');
+    }, 10);
+  });
+
+  // Close the Modal
+  document.getElementById('closeModalBtn').addEventListener('click', closeModal);
+  document.getElementById('cancelButton').addEventListener('click', closeModal);
+
+  function closeModal() {
+    const modal = document.getElementById('crudModal');
+    const modalContent = modal.querySelector('#crudModalContent');
+    modalContent.classList.remove('opacity-100', 'scale-100');
+    modalContent.classList.add('opacity-0', 'scale-95');
+
+    setTimeout(() => {
+      modal.classList.add('hidden'); // Hide modal after transition
+    }, 300);
+  }
+
+  // Submit the form via AJAX
+  document.getElementById('submitGameEntry').addEventListener('click', function(event) {
+    event.preventDefault();
+    const formData = new FormData(document.getElementById('addGameForm'));
+
+    fetch("{% url 'main:add_game_ajax' %}", {
+      method: 'POST',
+      headers: {
+        'X-CSRFToken': '{{ csrf_token }}',
+      },
+      body: formData,
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === 'success') {
+        alert('Game "' + data.game_name + '" added successfully!');
+        location.reload(); // Reload to see the new game
+      } else if (data.status === 'error') {
+        alert('Error: ' + JSON.stringify(data.errors));
+      }
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+  });
+</script>
 
 {% endblock %}
