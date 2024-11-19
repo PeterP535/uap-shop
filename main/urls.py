@@ -1,6 +1,6 @@
-from django.urls import path
-from main.views import show_main, create_product, edit_product, delete_product, add_to_cart_form, edit_cart_item, show_xml, show_json, show_xml_by_id, show_json_by_id, login_user, logout_user, delete_cart_item, register, add_game_ajax
-
+from django.urls import include, path
+from main.views import show_main, create_product, edit_product, delete_product, add_to_cart_form, edit_cart_item, show_xml, show_json, show_xml_by_id, show_json_by_id 
+from main.views import login_user, logout_user, delete_cart_item, register, add_game_ajax, create_product_flutter
 
 app_name = 'main'
 
@@ -20,4 +20,8 @@ urlpatterns = [
     path('delete-cart-item/<int:item_id>/', delete_cart_item, name='delete_cart_item'),  
     path('register/', register, name='register'),
     path('add-game-ajax/', add_game_ajax, name='add_game_ajax'),
+    path('auth/', include('authentication.urls')),
+    path('create-flutter/', create_product_flutter, name='create_product_flutter'),
+    path('items/', show_json, name='items'),
+
 ]

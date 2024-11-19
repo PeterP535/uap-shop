@@ -20,6 +20,7 @@ import datetime
 from django.contrib.auth.forms import UserCreationForm
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+import json
 
 
 @login_required(login_url='/login')
@@ -209,9 +210,11 @@ def show_xml(request):
     return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
 
 # View to display all items in JSON format
-def show_json(request):
+@login_required
+def show_json(request,):
     data = Item.objects.all()
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
 
 # View to display an item by its ID in XML format
 def show_xml_by_id(request, id):
@@ -230,13 +233,36 @@ def add_game_ajax(request):
     if request.method == 'POST':
         form = ProductForm(request.POST)
         if form.is_valid():
-            product = form.save()
+            product = form.save(commit=False)
+            product.user = request.user  # Set pengguna
+            product.save()
             return JsonResponse({'status': 'success', 'game_name': product.name})
         else:
             return JsonResponse({'status': 'error', 'errors': form.errors})
     return JsonResponse({'status': 'invalid_method'})
 
+
 @login_required
 def show_add_game_modal(request):
     form = ProductForm()
     return render(request, 'add_game_modal.html', {'form': form})
+
+@csrf_exempt
+def create_product_flutter(request):
+    if request.method == 'POST':
+        
+        data = json.loads(request.body)
+
+        new_product = Item.objects.create(
+            user = request.user,
+            name = data["name"],
+            amount = data["amount"],
+            price = int(data["price"]),
+            description = data["description"]
+        )
+
+        new_product.save()
+
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
