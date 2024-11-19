@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-&sy0-5$^*p^gkm*3k9ob$3xxj-*vjf2d2d^49@7(lr+(bs=@wf
 PRODUCTION = os.getenv("PRODUCTION", False)
 DEBUG = not PRODUCTION
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "peter-putra-uapshop1.pbp.cs.ui.ac.id"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "peter-putra-uapshop.pbp.cs.ui.ac.id"]
 
 
 # Application definition
@@ -123,3 +123,4 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+CSRF_TRUSTED_ORIGINS = ["http://localhost","http://127.0.0.1","http://https://pbp.cs.ui.ac.id/web/project/peter.putra/uapshop", "https://https://pbp.cs.ui.ac.id/web/project/peter.putra/uapshop"]
